@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware
 from db.user_db import UserInDB
 from db.user_db import update_user, get_user
 from db.transaction_db import TransactionInDB
@@ -9,6 +10,15 @@ import datetime
 from fastapi import FastAPI
 from fastapi import HTTPException
 api = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com", "https://localhost.tiangolo.com",
+    "http://localhost", "http://localhost:8080",
+]
+api.add_middleware(
+    CORSMiddleware, allow_origins=origins,
+    allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
+)
 
 
 @api.post("/user/auth/")
