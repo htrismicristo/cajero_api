@@ -40,6 +40,15 @@ async def get_balance(username: str):
     return user_out
 
 
+@api.get("/user/account/{username}")
+async def get_pass(username: str):
+    user_in_db = get_user(username)
+    if user_in_db == None:
+        raise HTTPException(status_code=404, detail="El usuario no existe")
+    user_out = UserOut(**user_in_db.dict())
+    return user_out
+
+
 @api.put("/user/transaction/")
 async def make_transaction(transaction_in: TransactionIn):
     user_in_db = get_user(transaction_in.username)
